@@ -1,11 +1,6 @@
 package Jgui;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-//import com.microsoft.sqlserver.jdbc.SQLServerDriver;
+
 
 import com.google.common.collect.Lists;
 import main.java.board.Board;
@@ -60,8 +55,7 @@ public class Table extends Observable {
     private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600, 600);
     private final static Dimension BOARD_PABEL_DIMENSION = new Dimension(400, 350);
     private final static Dimension TILE_PANEL_DIMENSION = new Dimension(10, 10);
-    private static String defaultPieceImagesPath = "C:\\Users\\Huy Nguyen\\IdeaProjects\\untitled\\src\\art\\fancy2" +
-            "\\simple\\";
+    private static String defaultPieceImagesPath = "src/art/fancy2/simple/";
 
     private final Color lightTileColor = Color.decode("#FFFACD");
     private final Color darkTileColor = Color.decode("#593E1A");
@@ -513,8 +507,7 @@ public class Table extends Observable {
                 for (final Move move : pieceLegalMoves(board)) {
                     if (move.getDestinationCoordinate() == this.tileID) {
                         try {
-                            add(new JLabel((new ImageIcon((ImageIO.read(new File("C:\\Users\\Huy " +
-                                    "Nguyen\\IdeaProjects\\hnguyen\\src\\main\\java\\misc\\green_dot.png")))))));
+                            add(new JLabel((new ImageIcon((ImageIO.read(new File("src/art/fancy2/misc/green_dot.png")))))));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

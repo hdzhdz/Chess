@@ -183,7 +183,7 @@ public class AlphaBeta extends Observable implements MoveStrategy {
     private int calculateQuiescenceDepth(final MoveTransition moveTransition,
                                          final int depth) {
         if(depth == 1 && this.quiescenceCount < MAX_QUIESCENCE) {
-            int activityMeasure = 0;
+            double activityMeasure = 0;
             if (moveTransition.getTransitionBoard().currentPlayer().isInCheck()) {
                 activityMeasure += 1;
             }

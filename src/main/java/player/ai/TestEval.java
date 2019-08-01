@@ -32,7 +32,7 @@ public class TestEval implements BoardEvaluator {
         score += imbalance(board, player, depth);
         score += bishopPair(board, player, depth);
         score += pawnMidGame(board, player, depth);
-        score += castled(player) + depthBonus( depth) + check(player) + mobility(player) + checkmate(player,depth);
+        score += castled(player) + depthBonus( depth) + mobility(player) + checkmate(player,depth);
         return score;
     }
 
