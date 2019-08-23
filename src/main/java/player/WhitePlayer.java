@@ -39,12 +39,14 @@ public class WhitePlayer extends Player {
     protected Collection<Move> calculateKingCastles(final Collection<Move> playerLegals, final Collection<Move> opponentsLegals) {
 
         final List<Move> kingCastles = new ArrayList<>();
+        //System.out.println(this.isInCheck() +" "+ this.getPlayerKing().getPiecePos());
         if (this.playerKing.isFirstMove() && !this.isInCheck()) {
             if (!this.board.getTile(61).isTileOccupied() && !this.board.getTile(62).isTileOccupied()) {
                 final Tile rookTile = this.board.getTile(63);
                 if (rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()) {
                     if (Player.calculateAttacksOnTile(61, opponentsLegals).isEmpty()
                             && Player.calculateAttacksOnTile(62, opponentsLegals).isEmpty()
+                            && Player.calculateAttacksOnTile(60, opponentsLegals).isEmpty()
                             && rookTile.getPiece().getPieceType().isRook()) {
                         kingCastles.add(new KingSideCastleMove(this.board, this.playerKing, 62,
                                 (Rook)rookTile.getPiece(), rookTile.getTileCoordinate(), 61));
@@ -57,6 +59,7 @@ public class WhitePlayer extends Player {
                     if (Player.calculateAttacksOnTile(59, opponentsLegals).isEmpty()
                             && Player.calculateAttacksOnTile(58, opponentsLegals).isEmpty()
                             && Player.calculateAttacksOnTile(57, opponentsLegals).isEmpty()
+                            && Player.calculateAttacksOnTile(60, opponentsLegals).isEmpty()
                             && rookTile.getPiece().getPieceType().isRook()) {
                         kingCastles.add(new QueenSideCastleMove(this.board, this.playerKing, 58,
                                 (Rook)rookTile.getPiece(), rookTile.getTileCoordinate(), 59));

@@ -1,5 +1,6 @@
 package main.java.player.ai;
 
+import main.java.Alliance;
 import main.java.board.Board;
 import main.java.pieces.Piece;
 import main.java.player.Player;
@@ -11,7 +12,7 @@ public final class StandardBoardEvaluator implements BoardEvaluator {
     private static int CASTLE_BONUS = 200;
 
     @Override
-    public int evaluate(final Board board, final int depth) {
+    public int evaluate(final Board board, final int depth, Alliance AI) {
         return scorePlayer(board, board.whitePlayer(), depth) - scorePlayer(board,board.blackPlayer(), depth);
     }
 

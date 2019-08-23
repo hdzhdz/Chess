@@ -1,5 +1,6 @@
 package main.java.player.ai;
 
+import main.java.Alliance;
 import main.java.board.Board;
 import main.java.board.Move;
 import main.java.player.MoveTransition;
@@ -7,10 +8,12 @@ import main.java.player.MoveTransition;
 public class Minimax implements MoveStrategy {
     private  final BoardEvaluator boardEvaluator;
     private final int searchDepth;
+    private final Alliance AI;
 
-    public Minimax(final int searchDepth) {
+    public Minimax(final int searchDepth, Alliance AI) {
         this.boardEvaluator = new TestEval();
         this.searchDepth = searchDepth;
+        this.AI = AI;
     }
 
     @Override
@@ -48,7 +51,7 @@ public class Minimax implements MoveStrategy {
 
     public int min(final Board board, final int depth){
         if (depth == 0 || isEndGameScenario(board)){
-            return this.boardEvaluator.evaluate(board, depth);
+            return this.boardEvaluator.evaluate(board, depth, AI);
         }
         int lowestSeenValue = Integer.MAX_VALUE;
         for (final Move move : board.currentPlayer().getLegalMoves()){
@@ -69,7 +72,7 @@ public class Minimax implements MoveStrategy {
 
     public int max (final Board board, final int depth){
         if (depth == 0|| isEndGameScenario(board)){
-            return this.boardEvaluator.evaluate(board, depth);
+            return this.boardEvaluator.evaluate(board, depth, AI);
         }
         int highestSeenValue = Integer.MIN_VALUE;
         for (final Move move : board.currentPlayer().getLegalMoves()){

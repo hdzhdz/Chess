@@ -5,6 +5,7 @@ import main.java.board.Move;
 
 public interface MoveStrategy {
 
-    Move execute (Board board);
+
+    Move execute(Board board);
 
 }

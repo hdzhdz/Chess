@@ -3,6 +3,7 @@ package Jgui;
 
 
 import com.google.common.collect.Lists;
+import main.java.Alliance;
 import main.java.board.Board;
 import main.java.board.BoardUtils;
 import main.java.board.Move;
@@ -224,8 +225,11 @@ public class Table extends Observable {
                     }
                 }
             }
+            MoveStrategy miniMax = new AlphaBeta(Table.get().getGameSetup().getSearchDepth(), Alliance.WHITE);
+            if (Table.get().getGameSetup().getBlackPlayerType() == PlayerType.COMPUTER){
+                miniMax = new AlphaBeta(Table.get().getGameSetup().getSearchDepth(), Alliance.BLACK);
+            }
 
-            final MoveStrategy miniMax = new AlphaBeta(Table.get().getGameSetup().getSearchDepth());
             System.out.println(Table.get().
 
                     getGameSetup().

@@ -2,6 +2,7 @@ package main.java.player.ai;
 
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
+import main.java.Alliance;
 import main.java.board.Board;
 import main.java.board.BoardUtils;
 import main.java.board.Move;
@@ -11,13 +12,17 @@ import main.java.player.Player;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Observable;
+import java.util.concurrent.ForkJoinPool;
 
 import static main.java.board.BoardUtils.mvvlva;
 
 public class AlphaBeta extends Observable implements MoveStrategy {
-
+    private static final ForkJoinPool POOL = new ForkJoinPool();
+    private static final double PERCENTAGE_SEQUENTIAL = 0.25;
+    private static final int DIVIDE_CUTOFF = 3;
     private  final BoardEvaluator evaluator;
     private final int searchDepth;
+    private final Alliance AI;
     private long boardsEvaluated;
     private long executionTime;
     private int quiescenceCount;
@@ -49,11 +54,12 @@ public class AlphaBeta extends Observable implements MoveStrategy {
     }
 
 
-    public AlphaBeta(final int searchDepth) {
+    public AlphaBeta(final int searchDepth, Alliance AI) {
         this.evaluator = new TestEval();
         this.searchDepth = searchDepth;
         this.boardsEvaluated = 0;
         this.quiescenceCount = 0;
+        this.AI = AI;
     }
 
     @Override
@@ -63,6 +69,10 @@ public class AlphaBeta extends Observable implements MoveStrategy {
 
     public long getNumBoardsEvaluated() {
         return this.boardsEvaluated;
+    }
+
+    public Alliance getAI () {
+        return this.AI;
     }
 
     @Override
@@ -142,7 +152,7 @@ public class AlphaBeta extends Observable implements MoveStrategy {
                     final int lowest) {
         if (depth == 0 || BoardUtils.isEndGame(board)) {
             this.boardsEvaluated++;
-            return this.evaluator.evaluate(board, depth);
+            return this.evaluator.evaluate(board, depth, AI);
         }
         int currentHighest = highest;
         for (final Move move : MoveSorter.STANDARD.sort((board.currentPlayer().getLegalMoves()))) {
@@ -164,7 +174,7 @@ public class AlphaBeta extends Observable implements MoveStrategy {
                     final int lowest) {
         if (depth == 0 || BoardUtils.isEndGame(board)) {
             this.boardsEvaluated++;
-            return this.evaluator.evaluate(board, depth);
+            return this.evaluator.evaluate(board, depth, AI);
         }
         int currentLowest = lowest;
         for (final Move move : MoveSorter.STANDARD.sort((board.currentPlayer().getLegalMoves()))) {

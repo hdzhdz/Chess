@@ -38,7 +38,19 @@ public class Board {
         this.transitionMove = builder.transitionMove != null ? builder.transitionMove : Move.MoveFactory.getNullMove();
         this.moveCount = builder.count;
     }
-
+    public  Board copy() {
+        Builder builder = new Builder();
+        for (Piece piece : this.getWhitePieces()){
+            builder.setPiece(piece);
+        }
+        for (Piece piece: this.getBlackPieces()){
+            builder.setPiece(piece);
+        }
+        Board copy = builder.build();
+        System.out.println(copy.toFen() );
+        System.out.println(copy.toString());
+        return copy;
+    }
     public Player currentPlayer(){
         return this.currentPlayer;
     }
@@ -152,6 +164,7 @@ public class Board {
         //build the board
         return builder.build();
     }
+
     public static Board createStandardBoard() {
         final Builder builder = new Builder();
         // Black Layout
